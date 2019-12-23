@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
         isPowerBulletShot = false;
         bullet = null;
         audioSource = GetComponent<AudioSource>();
+        gameObject.transform.localScale *= scal;
     }
 
     void Update(){
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
     void updateUI(){
         playerUImain.GetComponentInChildren<Slider>().maxValue =maxhp;
         playerUImain.GetComponentInChildren<Slider>().value =hp;
-        playerUImain.GetComponentInChildren<Text>().text = GameManager.instance.playerSkins[skinNumber].name;
+        playerUImain.GetComponentInChildren<Text>().text = GameManager.instance.playerSkins[skinNumber].pname;
 
     }
     public void Initialize(int p_skinNumber, int p_playerNumber){
