@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 01Azgaran
   m_EditorClassIdentifier: 
   pname: Azgaran
-  speed: 10
-  maxhp: 21
+  speed: 9
+  maxhp: 24
   attack: 3
   scale: 0.9
   img: {fileID: 21300000, guid: cd7d022e3d7eb494e9de003839c87d8a, type: 3}

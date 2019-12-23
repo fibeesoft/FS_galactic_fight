@@ -6,108 +6,88 @@ public class Damage : MonoBehaviour
 {
 
     int hp;
-    SpriteRenderer spriteRend;
-    AudioSource audioSource;
+    int maxhp;
+    int attack;
 
     void Start()
     {
-        hp = AssignMaxHp();
-        spriteRend = GetComponentInChildren<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
+
     }
 
-    int AssignMaxHp(){
-        int maxhp;
-        if(gameObject.CompareTag("Player")){
-            maxhp = 10;
-        }else if(gameObject.CompareTag("Enemy")){
-            maxhp = 10;
+    public void AssignMaxHpAndAttack(){
+        if(gameObject.CompareTag("Enemy")){
+            maxhp = 36;
+            attack = 4;
         }else if(gameObject.CompareTag("EnemyFollower")){
             maxhp = 2;
+            attack = 3;
         }else{
             maxhp = 1;
+            attack = 1;
         }
-
+        hp = maxhp;
+    }
+    public int GetMaxHp(){
         return maxhp;
     }
-    void Update()
-    {
-        
+    public int GetHp(){
+        return hp;
     }
-
+    public int GetAttack(){
+        return attack;
+    }
     public void TakeDamage(int damage){
         if(hp - damage > 0){
             hp-=damage;
-            print(gameObject.name + " " + hp);
-            Hit();
+            if(gameObject.transform.CompareTag("Enemy")){
+                GetComponent<Enemy>().updateUI();
+            }
         }else{
             Die();
         }
     }
 
-    void Hit(){
-        AudioClip audioclip = GameManager.instance.audioClipsArray[3];
-        audioSource.clip = audioclip;
-        audioSource.Play();        
+    public int MakeDamage(){
+        return attack;
     }
 
     public void Die(){
-        spriteRend.sprite = null;
-        GetComponent<CircleCollider2D>().enabled = false;
-        CreateExplosionEffect();
-        AudioClip audioclip = GameManager.instance.audioClipsArray[2];
-        audioSource.clip = audioclip;
-        audioSource.Play();
-
-
-        if(gameObject.CompareTag("Player")){
-            GameManager.instance.GameOver();
+        if(gameObject.transform.CompareTag("Enemy")){
+            GetComponent<Enemy>().Die();
+        }else{
+            Effects.instance.CreateExplosionEffect(gameObject.transform.position);
+            Destroy(gameObject, 0f);
         }
-        if(gameObject.CompareTag("Enemy")){
-            GameManager.instance.WinGame();
-        }
-
-        Destroy(gameObject, 1f);
     }
-
-    void CreateExplosionEffect(){
-        GameObject explosionEffect = GameManager.instance.effectPrefabArray[0];
-        GameObject a = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        Destroy(a, 1f);
-    }
-
 
     private void OnTriggerEnter2D(Collider2D other) {
-        print(other.gameObject.name);
-        if(other.gameObject.CompareTag("Bullet")){
-             TakeDamage(1);   
-        }
-        if(other.gameObject.CompareTag("BulletEnemy")){
-             TakeDamage(1);   
-        }
-        if(!gameObject.CompareTag("Player") ){          
-            if(other.gameObject.CompareTag("ExplosionBullet")){
-                TakeDamage(2);   
-            }
-        }
-        if(!gameObject.CompareTag("EnemyFollower") && !gameObject.CompareTag("Enemy")){
-            if(other.gameObject.CompareTag("EnemyFollower")){
-                Die();
-            }
+        if(other.transform.GetComponent<Damage>() != null){
+            TakeDamage(other.transform.GetComponent<Damage>().MakeDamage());
         }
 
+        if(other.transform.CompareTag("Bullet")){
+            TakeDamage(System.Convert.ToInt32(other.transform.name.Substring(6,1)));   
+        }
+        if(other.transform.CompareTag("ExplosionBullet")){
+            TakeDamage(System.Convert.ToInt32(other.transform.name.Substring(6,1)));   
+        }
 
+        if(other.transform.CompareTag("Player1")){
+            TakeDamage(other.GetComponent<Player>().MakeDamage());
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        
-
-        if(other.gameObject.CompareTag("Enemy")){
-            Die();
-        }
-        if(other.gameObject.CompareTag("Player")){
-            Die();
+        if(other.transform.GetComponent<Damage>() != null){
+            TakeDamage(other.transform.GetComponent<Damage>().MakeDamage());
         }
 
+        if(other.transform.CompareTag("Bullet")){
+            TakeDamage(System.Convert.ToInt32(other.transform.name.Substring(6,1)));   
+        }
+
+        if(other.transform.CompareTag("Player1")){
+            TakeDamage(other.transform.GetComponent<Player>().MakeDamage());
+        }
     }
 }

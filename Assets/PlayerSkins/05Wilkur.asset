@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pname: Wilkur
   speed: 12
-  maxhp: 10
-  attack: 4
+  maxhp: 20
+  attack: 3
   scale: 0.8
   img: {fileID: 21300000, guid: 26b4d234dc94f83469d7863f14399305, type: 3}

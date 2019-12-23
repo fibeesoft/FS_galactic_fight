@@ -113,17 +113,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int MakeDamage(){
+        return attack;
+    }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.CompareTag("Bullet")){
             TakeDamage(System.Convert.ToInt32(other.name.Substring(6,1)));
             rb.AddForce(other.gameObject.GetComponent<Rigidbody2D>().velocity * 7000f, ForceMode2D.Impulse);
-
             Destroy(other.gameObject, 0f);
         }
-
         if(other.gameObject.CompareTag("ExplosionBullet")){
-            TakeDamage(System.Convert.ToInt32(other.gameObject.name.Substring(6,1)) + 3);
+            TakeDamage(System.Convert.ToInt32(other.gameObject.name.Substring(6,1)));
         }
+        if(other.gameObject.CompareTag("BulletEnemy")){
+            TakeDamage(System.Convert.ToInt32(other.transform.name.Substring(6,1)));
+            Destroy(other.gameObject, 0f);  
+        }
+        if(other.gameObject.CompareTag("EnemyFollower")){
+            //TakeDamage(other.transform.GetComponent<Damage>().GetAttack());  
+            TakeDamage(2);
+            Destroy(other.gameObject, 0f);
+        }            
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
@@ -131,7 +141,12 @@ public class Player : MonoBehaviour
         if(other.gameObject.CompareTag("Moon")){
             TakeDamage(3);
         }
-
+        if(other.gameObject.CompareTag("EnemyFollower")){
+            TakeDamage(other.transform.GetComponent<Damage>().GetAttack());  
+        }
+        if(other.gameObject.CompareTag("Enemy")){
+            GameManager.instance.GameOver(); 
+        }
     }
 
     void Shoot(){
@@ -158,7 +173,7 @@ public class Player : MonoBehaviour
 
     void CreateBulletExplosion(){
         GameObject bulletExplosion = Instantiate(GameManager.instance.effectPrefabArray[1], bullet.transform.position, Quaternion.identity);
-        bulletExplosion.name = "bulexp" + attack;
+        bulletExplosion.name = "bulexp" + (attack + 2);
         Destroy(bulletExplosion, 1f);
     }
 

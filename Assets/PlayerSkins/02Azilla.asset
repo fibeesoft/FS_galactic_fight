@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pname: Azilla
   speed: 7
-  maxhp: 30
-  attack: 2
+  maxhp: 33
+  attack: 3
   scale: 0.9
   img: {fileID: 21300000, guid: dbb1cf3004475f04bb2cac5edf8e3c3b, type: 3}

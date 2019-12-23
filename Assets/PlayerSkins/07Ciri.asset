@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pname: Ciri
   speed: 11
-  maxhp: 23
-  attack: 2
+  maxhp: 15
+  attack: 6
   scale: 0.7
   img: {fileID: 21300000, guid: 33d19f6ed4da3d54c95aab2ba6d42a93, type: 3}

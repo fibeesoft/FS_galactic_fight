@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pname: Kalzar
   speed: 7
-  maxhp: 19
-  attack: 3
+  maxhp: 42
+  attack: 2
   scale: 1.1
   img: {fileID: 21300000, guid: 39b34f3bb446ce146a21d22a7d7455ee, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pname: Gonzo
   speed: 6
-  maxhp: 33
+  maxhp: 45
   attack: 6
   scale: 1.2
   img: {fileID: 21300000, guid: 4a95d5d7b0fd52c46acba7593a03732f, type: 3}

@@ -10,7 +10,7 @@ public class EnemyFollower : MonoBehaviour
     float speed;
     private void Start() {
         damageScript = GetComponent<Damage>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player1");
         speed = Random.Range(1f, 2.2f);
     }
     void Update()
