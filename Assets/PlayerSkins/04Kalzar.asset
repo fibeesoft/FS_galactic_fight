@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 04Kalzar
   m_EditorClassIdentifier: 
   pname: Kalzar
-  speed: 7
+  speed: 4
   maxhp: 42
   attack: 2
   scale: 1.1

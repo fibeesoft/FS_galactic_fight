@@ -11,12 +11,14 @@ public class Player2GameManager : MonoBehaviour
     public GameObject basicPlayerGameObject;
     public GameObject playUI;
     public GameObject playerSelectUI;
+    public GameObject playerSelectImage1, playerSelectImage2;
 
     public Text txt_name1, txt_name2;
     public Text txt_speed1, txt_speed2;
     public Text txt_hp1, txt_hp2;
     public Text txt_attack1, txt_attack2;
     public Image img1,img2;
+    bool isPlayer1Ready, isPlayer2Ready;
     void Awake() {
         if(instance == null){
             instance = this;
@@ -26,38 +28,63 @@ public class Player2GameManager : MonoBehaviour
     }
     void Start()
     {
- 
+        isPlayer1Ready = false;
+        isPlayer2Ready = false;
         playerSelectUI.SetActive(true);
         ChangeSkin();
+        Time.timeScale = 0;
     }
     
     private void Update() {
         if(!isGameOn){
-            if(Input.GetButtonDown("Fire21")){
-                if(p1skin < GameManager.instance.playerSkins.Length - 1){
-                    p1skin++;
+            if(!isPlayer1Ready){
+                if(Input.GetButtonDown("Fire21")){
+                    if(p1skin < GameManager.instance.playerSkins.Length - 1){
+                        p1skin++;
 
-                }else{
-                    p1skin = 0;
+                    }else{
+                        p1skin = 0;
+                    }
+                    ChangeSkin();
                 }
-                ChangeSkin();
             }
-            if(Input.GetButtonDown("Fire22")){
-                if(p2skin < GameManager.instance.playerSkins.Length - 1){
-                    p2skin++;
+            if(!isPlayer2Ready){
+                if(Input.GetButtonDown("Fire22")){
+                    if(p2skin < GameManager.instance.playerSkins.Length - 1){
+                        p2skin++;
+                    }else{
+                        p2skin = 0;
+                    } 
+                    ChangeSkin();       
+                }
+            }
+        }
+        if(!isGameOn){
+            if(Input.GetButtonDown("Fire11")){
+                isPlayer1Ready = !isPlayer1Ready;
+                if(isPlayer1Ready){
+                    playerSelectImage1.GetComponent<Image>().color = new Color(0.2f, 0.2f, 0.2f, 1f);
                 }else{
-                    p2skin = 0;
-                } 
-                ChangeSkin();       
+                    playerSelectImage1.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                }
+            }
+
+            if(Input.GetButtonDown("Fire12")){
+                isPlayer2Ready = !isPlayer2Ready;
+                if(isPlayer2Ready){
+                    playerSelectImage2.GetComponent<Image>().color = new Color(0.2f, 0.2f, 0.2f, 1f);
+                }else{
+                    playerSelectImage2.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                }
             }
         }
 
-
-        if(Input.GetButtonDown("Submit")){
-            if(!isGameOn){
-                StartTheGame();
+        if(!isGameOn && isPlayer1Ready && isPlayer2Ready){
+            if(Input.GetButtonDown("Submit")){
+                StartTheGame();     
             }
         }
+
     }
 
     void CreatePlayer(int playerSkinNumber, int playerNumber){
@@ -79,6 +106,7 @@ public class Player2GameManager : MonoBehaviour
               CreatePlayer(p2skin, 2);
               playerSelectUI.SetActive(false);
               isGameOn = true;
+              Time.timeScale = 1;
     }
 
     void ChangeSkin(){

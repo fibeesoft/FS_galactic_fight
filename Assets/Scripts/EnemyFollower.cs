@@ -11,7 +11,7 @@ public class EnemyFollower : MonoBehaviour
     private void Start() {
         damageScript = GetComponent<Damage>();
         player = GameObject.FindGameObjectWithTag("Player1");
-        speed = Random.Range(1f, 2.2f);
+        speed = Random.Range(0.5f, 1.8f);
     }
     void Update()
     {

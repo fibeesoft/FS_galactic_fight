@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 03Baziran
   m_EditorClassIdentifier: 
   pname: Baziran
-  speed: 11
+  speed: 5
   maxhp: 17
   attack: 5
   scale: 1.2

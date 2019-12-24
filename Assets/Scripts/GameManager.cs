@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerSkin [] playerSkins;
     public Sprite[] skinsImages;
-    public GameObject pauseMenu;
+    public GameObject pauseMenu,pauseMenuWinUI, pauseMenuButtons;
     bool isPauseMenuOn;
     void Start()
     {
@@ -66,11 +67,8 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 if(isPauseMenuOn){
-                    if(Input.GetButtonDown("Fire2")){
-                        LaodMainMenu();
-                    }
                     if(Input.GetButtonDown("Submit")){
-                        ClosePauseMenu();
+                        LaodMainMenu();
                     }
                 }
             }
@@ -89,15 +87,15 @@ public class GameManager : MonoBehaviour
         }
 
         if(sceneNumber == 3){
-            if(Input.GetButtonDown("Fire1")){
+            if(Input.GetButtonDown("Submit")){
                 LoadTheGame();
             }
-            if(Input.GetButtonDown("Fire2")){
+            if(Input.GetButtonDown("Back")){
                 LaodMainMenu();
             }
         }
         if(sceneNumber == 4){
-            if(Input.GetButtonDown("Fire1")){
+            if(Input.GetButtonDown("Submit")){
                 LaodMainMenu();
             }
         }
@@ -108,7 +106,23 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(true);
         isPauseMenuOn = true;
         Time.timeScale = 0;
+        if(pauseMenuWinUI!=null){
+            pauseMenuWinUI.SetActive(false);
+        }
+        pauseMenuButtons.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, -100, 0f);
     }
+    public void OpenPauseMenu(int winPlayer){
+        pauseMenu.SetActive(true);
+        isPauseMenuOn = true;
+        Time.timeScale = 0;
+        if(pauseMenuWinUI!=null){
+            pauseMenuWinUI.SetActive(true);
+            pauseMenuButtons.GetComponent<RectTransform>().anchoredPosition = new Vector3(320f, -100, 0f);
+            pauseMenuWinUI.GetComponentInChildren<Text>().text = "Player " + winPlayer + " won!";
+            pauseMenuWinUI.GetComponentInChildren<Image>().sprite = GameObject.FindGameObjectWithTag("Player" + winPlayer).GetComponentInChildren<SpriteRenderer>().sprite;
+        }
+    }
+
 
     public void ClosePauseMenu(){
         pauseMenu.SetActive(false);

@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
     AudioSource audioSource;
     AudioClip audioClip;
     int skinNumber;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -33,6 +32,7 @@ public class Player : MonoBehaviour
         bullet = null;
         audioSource = GetComponent<AudioSource>();
         gameObject.transform.localScale *= scal;
+
     }
 
     void Update(){
@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
         playerUImain = GameObject.FindGameObjectWithTag("pui" + p_playerNumber);
         playerUI.GetComponent<Image>().sprite = GameManager.instance.playerSkins[skinNumber].img;
         updateUI();
+        gameObject.layer = LayerMask.NameToLayer("player" + p_playerNumber);        
     }
 
     void Die(){
@@ -97,6 +98,8 @@ public class Player : MonoBehaviour
         CreateExplosion1();
         Destroy(gameObject, 0.5f);
     }
+
+
 
     public void TakeDamage(int damage){
         if(hp > damage){
@@ -109,7 +112,8 @@ public class Player : MonoBehaviour
             hp -= damage;
             updateUI();
             Die();
-            GameManager.instance.OpenPauseMenu();
+            int winPlayer = gameObject.transform.CompareTag("Player1") ? 2 : 1;
+            GameManager.instance.OpenPauseMenu(winPlayer);
         }
     }
 
@@ -119,7 +123,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.CompareTag("Bullet")){
             TakeDamage(System.Convert.ToInt32(other.name.Substring(6,1)));
-            rb.AddForce(other.gameObject.GetComponent<Rigidbody2D>().velocity * 7000f, ForceMode2D.Impulse);
+            rb.AddForce(other.gameObject.GetComponent<Rigidbody2D>().velocity * 30f, ForceMode2D.Impulse);
             Destroy(other.gameObject, 0f);
         }
         if(other.gameObject.CompareTag("ExplosionBullet")){
@@ -147,6 +151,9 @@ public class Player : MonoBehaviour
         if(other.gameObject.CompareTag("Enemy")){
             GameManager.instance.GameOver(); 
         }
+        if(other.gameObject.CompareTag("Player1") || other.gameObject.CompareTag("Player2")){
+            rb.AddForce(other.gameObject.GetComponent<Rigidbody2D>().velocity * 70000f, ForceMode2D.Impulse);
+        }
     }
 
     void Shoot(){
@@ -154,6 +161,11 @@ public class Player : MonoBehaviour
         audioSource.Play();
         GameObject a = Instantiate(BulletPrefabs[0], aimPosition.transform.position, Quaternion.identity);
         a.name = "Bullet" + attack;
+        if(gameObject.transform.CompareTag("Player1")){
+            a.layer = LayerMask.NameToLayer("player_bullets1");
+        }else{
+            a.layer = LayerMask.NameToLayer("player_bullets2");
+        }
         a.GetComponent<Rigidbody2D>().AddRelativeForce(aimPosition.right * 3000*Time.deltaTime, ForceMode2D.Impulse);
         Destroy(a, 3f);
     }
@@ -174,6 +186,7 @@ public class Player : MonoBehaviour
     void CreateBulletExplosion(){
         GameObject bulletExplosion = Instantiate(GameManager.instance.effectPrefabArray[1], bullet.transform.position, Quaternion.identity);
         bulletExplosion.name = "bulexp" + (attack + 2);
+
         Destroy(bulletExplosion, 1f);
     }
 

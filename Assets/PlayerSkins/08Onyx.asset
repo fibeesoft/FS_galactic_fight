@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 08Onyx
   m_EditorClassIdentifier: 
   pname: Onyx
-  speed: 9
+  speed: 5
   maxhp: 32
   attack: 3
   scale: 1

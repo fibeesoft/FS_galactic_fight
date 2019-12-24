@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 02Azilla
   m_EditorClassIdentifier: 
   pname: Azilla
-  speed: 7
+  speed: 4
   maxhp: 33
   attack: 3
   scale: 0.9
