@@ -5,7 +5,8 @@ using UnityEngine;
 public class Effects : MonoBehaviour
 {
     public static Effects instance;
-    AudioSource audioSource;
+    public AudioClip [] sounds;
+    public GameObject [] effects;
     void Awake() {
         if(instance == null){
             instance = this;
@@ -15,7 +16,7 @@ public class Effects : MonoBehaviour
     }
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+
     }
 
     public void CreateExplosionEffect(Vector3 pos){
@@ -28,15 +29,4 @@ public class Effects : MonoBehaviour
 
     /////sounds////
 
-    public void DieSoundEffect(){
-        AudioClip audioclip = GameManager.instance.audioClipsArray[2];
-        audioSource.clip = audioclip;
-        audioSource.Play();  
-    }
-
-    public void HitSoundEffect(){
-        AudioClip audioclip = GameManager.instance.audioClipsArray[3];
-        audioSource.clip = audioclip;
-        audioSource.Play();        
-    }
 }

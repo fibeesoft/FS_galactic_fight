@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRend;
     public Sprite[] sprites;
     AudioSource audioSource;
-    AudioClip audioClip;
     int skinNumber;
     void Start()
     {
@@ -92,21 +91,20 @@ public class Player : MonoBehaviour
 
     void Die(){
         spriteRend.sprite = null;
-        audioClip = GameManager.instance.audioClipsArray[1];
-        audioSource.clip = audioClip;
-        audioSource.Play();
-        CreateExplosion1();
+        PlaySoundEffect(1);
+        Effects.instance.CreateExplosionEffect(transform.position);
         Destroy(gameObject, 0.5f);
     }
 
 
-
+    void PlaySoundEffect(int soundNumber){
+        audioSource.clip = Effects.instance.sounds[soundNumber];
+        audioSource.Play();
+    }
     public void TakeDamage(int damage){
         if(hp > damage){
             hp -= damage;
-            audioClip = GameManager.instance.audioClipsArray[4];
-            audioSource.clip = audioClip;
-            audioSource.Play();
+            PlaySoundEffect(3);
             updateUI();
         }else{
             hp -= damage;
@@ -157,8 +155,7 @@ public class Player : MonoBehaviour
     }
 
     void Shoot(){
-        audioSource.clip = GameManager.instance.audioClipsArray[5];
-        audioSource.Play();
+        //audioSource.clip
         GameObject a = Instantiate(BulletPrefabs[0], aimPosition.transform.position, Quaternion.identity);
         a.name = "Bullet" + attack;
         if(gameObject.transform.CompareTag("Player1")){
@@ -188,11 +185,6 @@ public class Player : MonoBehaviour
         bulletExplosion.name = "bulexp" + (attack + 2);
 
         Destroy(bulletExplosion, 1f);
-    }
-
-    void CreateExplosion1(){
-        GameObject exp1 = Instantiate(GameManager.instance.effectPrefabArray[2], transform.position, Quaternion.identity);
-        Destroy(exp1, 1f);
     }
 
 }
