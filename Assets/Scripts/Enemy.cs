@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
         damage = GetComponent<Damage>();
         spriteRend = GetComponentInChildren<SpriteRenderer>();
         timer = 0;
-        bulletSpeed = 3000f;
+        bulletSpeed = 15f;
         shootingRate = 1.5f;
         damage.AssignMaxHpAndAttack();
         playerUIimage = GameObject.FindGameObjectWithTag("puiImage2");
@@ -51,7 +51,8 @@ public class Enemy : MonoBehaviour
         attack = damage.GetAttack();
         GameObject a = Instantiate(enemyBulletPrefab, aimPosition.transform.position, Quaternion.identity);
         a.name = "bulene" + attack;
-        a.GetComponent<Rigidbody2D>().AddRelativeForce(-aimPosition.right * bulletSpeed*Time.deltaTime, ForceMode2D.Impulse);
+        //a.GetComponent<Rigidbody2D>().AddRelativeForce(-aimPosition.right * bulletSpeed*Time.deltaTime, ForceMode2D.Impulse);
+        a.GetComponent<Rigidbody2D>().AddRelativeForce(-aimPosition.right * bulletSpeed, ForceMode2D.Impulse);
         Destroy(a, 3f);
     }
 

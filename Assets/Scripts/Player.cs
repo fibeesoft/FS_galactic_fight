@@ -163,7 +163,8 @@ public class Player : MonoBehaviour
         }else{
             a.layer = LayerMask.NameToLayer("player_bullets2");
         }
-        a.GetComponent<Rigidbody2D>().AddRelativeForce(aimPosition.right * 3000*Time.deltaTime, ForceMode2D.Impulse);
+
+        a.GetComponent<Rigidbody2D>().AddRelativeForce(aimPosition.right * 15, ForceMode2D.Impulse);
         Destroy(a, 3f);
     }
     void ShootPowerBullet(){
