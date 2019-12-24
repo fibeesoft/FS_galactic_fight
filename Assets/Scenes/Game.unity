@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 228579730}
   - component: {fileID: 228579729}
   m_Layer: 0
-  m_Name: dreamstime_xxl_123015144
+  m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2061,7 +2061,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &3892463522122457856
 MonoBehaviour:
   m_ObjectHideFlags: 0

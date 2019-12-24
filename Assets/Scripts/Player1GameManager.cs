@@ -30,7 +30,9 @@ public class Player1GameManager : MonoBehaviour
         playerSelectUI.SetActive(true);
         ChangeSkin();
     }
-    
+    public bool GetIsGameOn(){
+        return isGameOn;
+    }
     private void Update() {
         if(!isGameOn){
             if(Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire21") ){

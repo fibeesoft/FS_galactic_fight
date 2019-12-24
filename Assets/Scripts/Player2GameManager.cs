@@ -28,6 +28,7 @@ public class Player2GameManager : MonoBehaviour
     }
     void Start()
     {
+        isGameOn = false;
         isPlayer1Ready = false;
         isPlayer2Ready = false;
         playerSelectUI.SetActive(true);
@@ -87,6 +88,9 @@ public class Player2GameManager : MonoBehaviour
 
     }
 
+    public bool GetIsGameOn(){
+        return isGameOn;
+    }
     void CreatePlayer(int playerSkinNumber, int playerNumber){
         Vector3 pos;
         if(playerNumber == 1){

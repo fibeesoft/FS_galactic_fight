@@ -56,19 +56,50 @@ public class GameManager : MonoBehaviour
 
 
         }
-        // Game 1 i 2 Scene
-        if(sceneNumber == 1 || sceneNumber == 2){
-            if(pauseMenu != null){
+        // Game 1
+        if(sceneNumber == 1){
+            if(Player1GameManager.instance.GetIsGameOn()==false){
                 if(Input.GetButtonDown("Back")){
-                    if(isPauseMenuOn){
-                        ClosePauseMenu();
-                    }else{
-                        OpenPauseMenu();
-                    }
+                    LaodMainMenu();
                 }
-                if(isPauseMenuOn){
-                    if(Input.GetButtonDown("Submit")){
-                        LaodMainMenu();
+            }
+            else{
+                if(pauseMenu != null){
+                    if(Input.GetButtonDown("Back")){
+                        if(isPauseMenuOn){
+                            ClosePauseMenu();
+                        }else{
+                            OpenPauseMenu();
+                        }
+                    }
+                    if(isPauseMenuOn){
+                        if(Input.GetButtonDown("Submit")){
+                            LaodMainMenu();
+                        }
+                    }
+                } 
+            }
+        }
+        // Game 2
+        if(sceneNumber == 2){
+            if(Player2GameManager.instance.GetIsGameOn() == false){
+                if(Input.GetButtonDown("Back")){
+                    LaodMainMenu();
+                }
+            }
+            else{
+                if(pauseMenu != null){
+                    if(Input.GetButtonDown("Back")){
+                        if(isPauseMenuOn){
+                            ClosePauseMenu();
+                        }else{
+                            OpenPauseMenu();
+                        }
+                    }
+                    if(isPauseMenuOn){
+                        if(Input.GetButtonDown("Submit")){
+                            LaodMainMenu();
+                        }
                     }
                 }
             }
@@ -109,13 +140,15 @@ public class GameManager : MonoBehaviour
         if(pauseMenuWinUI!=null){
             pauseMenuWinUI.SetActive(false);
         }
-        pauseMenuButtons.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, -100, 0f);
+        if(pauseMenuButtons!=null){
+            pauseMenuButtons.GetComponent<RectTransform>().anchoredPosition = new Vector3(0f, -100, 0f);
+        }
     }
     public void OpenPauseMenu(int winPlayer){
         pauseMenu.SetActive(true);
         isPauseMenuOn = true;
         Time.timeScale = 0;
-        if(pauseMenuWinUI!=null){
+        if(pauseMenuWinUI != null && pauseMenuButtons != null){
             pauseMenuWinUI.SetActive(true);
             pauseMenuButtons.GetComponent<RectTransform>().anchoredPosition = new Vector3(320f, -100, 0f);
             pauseMenuWinUI.GetComponentInChildren<Text>().text = "Player " + winPlayer + " won!";
